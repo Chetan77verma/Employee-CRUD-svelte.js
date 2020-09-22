@@ -15,8 +15,22 @@
 
   const deleteEmployee = (id) => {
     console.log("delete emoployee", id);
+    fetch(`${apiBaseUrl}/delete/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        //success
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const refreshList = (e) => {
+    //data recieved from child component
     //update the rendered list here
     console.log(e.detail);
   };
