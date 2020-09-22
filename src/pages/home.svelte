@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import EmployeeForm from "../components/employeeform.svelte";
   const apiBaseUrl = "http://dummy.restapiexample.com/api/v1";
   let employees = [];
   onMount(async () => {
@@ -15,14 +16,24 @@
   const deleteEmployee = (id) => {
     console.log("delete emoployee", id);
   };
+  const refreshList = (e) => {
+    //update the rendered list here
+    console.log(e.detail);
+  };
 </script>
 
 <style>
   .delete-btn {
-    color: red !important;
+    background-color: red !important;
+  }
+  .mgtp-10 {
+    margin-top: 10px;
   }
 </style>
 
+<div class="row">
+  <EmployeeForm on:postCreate={refreshList} />
+</div>
 <div class="row">
   {#if employees.length === 0}
     <h1>Loading...</h1>
@@ -34,11 +45,13 @@
             <p class="card-title">Name: {employee_name}</p>
             <p>Salary: {employee_salary}</p>
             <p>Age: {employee_age}</p>
-            <div class="card-actions">
-              <button on:click={() => editEmployee(id)}>Edit</button>
+            <div class="card-actions mgtp-10">
+              <button
+                class="btn"
+                on:click={() => editEmployee(id)}>Edit</button>
               <button
                 on:click={() => deleteEmployee(id)}
-                class="delete-btn">Delete</button>
+                class="btn delete-btn">Delete</button>
             </div>
           </div>
         </div>
